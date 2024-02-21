@@ -91,6 +91,8 @@ const LogIn = () => {
               className="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-300 rounded-md py-2 px-3 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" />
           </div>
           <h3 className="my-3 text-cyan-700 font-semibold">If you have not an account, please <Link to='/' className="text-purple-700">sign up</Link></h3>
+          <h3 className="my-3 text-cyan-700 font-semibold"> <Link to='/forget_password' className="text-purple-700">Forget password?</Link></h3>
+          
           <button type="submit" className="bg-green-500  text-white py-2 px-4 rounded-md w-full">Submit</button>
         </form>
 

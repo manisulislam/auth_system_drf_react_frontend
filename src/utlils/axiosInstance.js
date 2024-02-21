@@ -44,8 +44,9 @@ axiosInstance.interceptors.request.use(async req => {
                 }
             }
         }
-        return req
+       
     }
+    return req
 })
 
 export default axiosInstance;

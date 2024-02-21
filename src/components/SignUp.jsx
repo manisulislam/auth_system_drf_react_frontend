@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import axios from "axios"
 import { toast } from "react-toastify"
 
@@ -63,6 +63,29 @@ const SignUp = () => {
 
     }
 
+    const handleSignInWithGoogle = async(response) => {
+        console.log(response);
+
+    }
+    useEffect(() => {
+        // global google
+        google.accounts.id.initialize({
+            client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+            callback: handleSignInWithGoogle
+        });
+        google.accounts.id.renderButton(
+            document.getElementById("signInDiv"),
+            {
+                theme: "outline",
+                size: "large",
+                text: "continue_with",
+                shape:"circle",
+                width:"280",
+                
+                
+            }
+        )
+    }, [])
     return (
         <div>
             <div className="max-w-md mx-auto my-10 bg-white p-6 rounded-md shadow-lg">
@@ -139,13 +162,17 @@ const SignUp = () => {
 
                 <div className="border-b border-gray-300 my-4"></div>
 
-                <div className="flex gap-5 justify-around align-middle">
-                    <button className="bg-gradient-to-r from-purple-400 to-pink-500 hover:from-pink-500 transition duration-300 ease-in-out transform hover:scale-105 hover:to-purple-400 text-white font-semibold py-2 px-4 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50">
-                        Sign in With Google</button>
+                <div className="text-center" >
+                    <div id="signInDiv">
+                        {/* <button className="bg-gradient-to-r from-purple-400 to-pink-500 hover:from-pink-500 transition duration-300 ease-in-out transform hover:scale-105 hover:to-purple-400 text-white font-semibold py-2 px-4 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50">
+                        Sign in With Google</button> */}
+                    </div>
 
 
-                    <button className="bg-gray-800 text-white font-semibold py-2 px-4 rounded-md shadow-md transition duration-300 ease-in-out transform hover:scale-105 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-opacity-50">
+                    <div>
+                    <button className="bg-gray-800 text-white font-semibold py-2 mt-3 px-4 rounded-md shadow-md transition duration-300 ease-in-out transform hover:scale-105 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-opacity-50">
                         Sign in With Github</button>
+                    </div>
                 </div>
             </div>
         </div>

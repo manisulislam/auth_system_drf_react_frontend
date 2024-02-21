@@ -1,6 +1,6 @@
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import { SignUp, LogIn, ForgetPassword, Profile, VerifyEmail } from './components'
+import { SignUp, LogIn, ForgetPassword, Profile, VerifyEmail,ResetPassword } from './components'
 import { ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from "./components/Navbar"
@@ -22,6 +22,7 @@ function App() {
           <Route path='/' element={<SignUp></SignUp>} />
           <Route path='/login' element={<LogIn></LogIn>} />
           <Route path='/forget_password' element={<ForgetPassword></ForgetPassword>} />
+          <Route path='/password-reset-confirm/:uid/:token' element={<ResetPassword></ResetPassword>} />
           <Route path='/dashboard' element={<Profile></Profile>} />
           <Route path='/otp/verify' element={<VerifyEmail></VerifyEmail>} />
         </Routes>
