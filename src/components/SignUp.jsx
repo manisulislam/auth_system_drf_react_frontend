@@ -1,13 +1,14 @@
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate,useSearchParams } from "react-router-dom"
 import { useState, useEffect } from "react"
 import axios from "axios"
 import { toast } from "react-toastify"
-
+import axiosInstance from "../utlils/axiosInstance"
 
 
 
 const SignUp = () => {
     const navigate = useNavigate()
+    const [searchparams]=useSearchParams()
     const [formData, setFormData] = useState({
         email: "",
         first_name: "",
@@ -86,6 +87,43 @@ const SignUp = () => {
             }
         )
     }, [])
+
+
+    const handleSignInWithGithub=()=>{
+        window.location.assign(`https://github.com/login/oauth/authorize/?client_id=${import.meta.env.VITE_GITHUB_ID}`)
+    }
+
+    
+    const send_code_to_backend=async()=>{
+        if (searchparams){
+            try {
+            const qcode=searchparams.get('code')
+            const response=await axiosInstance.post("/auth/github/",{"code":qcode})
+            const result=response.data
+            if (response.status===200){
+                const user={
+                    "email":result.email,
+                    "names":result.full_name
+                }
+                localStorage.setItem("token",JSON.stringify(result.access_token))
+                localStorage.setItem("refresh_token",JSON.stringify(result.refresh_token))
+                localStorage.setItem("user", JSON.stringify(user))
+                navigate("/dashboard")
+                toast.success("Login successful")
+            }
+            } catch (error) {
+                console.log(error);
+            }
+                
+            }
+        }
+    let code= searchparams.get('code')
+    useEffect(()=>{
+        if (code){
+            send_code_to_backend()
+        }
+    },[code])
+
     return (
         <div>
             <div className="max-w-md mx-auto my-10 bg-white p-6 rounded-md shadow-lg">
@@ -170,7 +208,7 @@ const SignUp = () => {
 
 
                     <div>
-                    <button className="bg-gray-800 text-white font-semibold py-2 mt-3 px-4 rounded-md shadow-md transition duration-300 ease-in-out transform hover:scale-105 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-opacity-50">
+                    <button onClick={handleSignInWithGithub} className="bg-gray-800 text-white font-semibold py-2 mt-3 px-4 rounded-md shadow-md transition duration-300 ease-in-out transform hover:scale-105 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-opacity-50">
                         Sign in With Github</button>
                     </div>
                 </div>
